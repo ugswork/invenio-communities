@@ -126,6 +126,9 @@ setup(
     include_package_data=True,
     platforms='any',
     entry_points={
+        'invenio_assets.webpack': [
+            'invenio_communities = invenio_communities.bundles:communities',
+        ],
         'invenio_base.apps': [
             'invenio_communities = invenio_communities:InvenioCommunities',
         ],

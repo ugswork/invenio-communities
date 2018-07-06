@@ -26,16 +26,17 @@
 from __future__ import absolute_import, print_function
 
 from flask_assets import Bundle
+from flask_webpackext import WebpackBundle
 from invenio_assets import NpmBundle, RequireJSFilter
 
 js = Bundle(
-    "js/invenio_communities/main.js",
+    'js/invenio_communities/main.js',
     filters=RequireJSFilter(),
     output='gen/communities.%(version)s.js'
 )
 
 ckeditor = Bundle(
-    "js/invenio_communities/ckeditor.js",
+    'js/invenio_communities/ckeditor.js',
     filters=RequireJSFilter(),
     output='gen/communities.%(version)s.js'
 )
@@ -45,6 +46,19 @@ css = NpmBundle(
     filters='scss, cleancss',
     output='gen/communities.%(version)s.css',
     npm={
+        'ckeditor': '~4.5.8',
+    }
+)
+
+communities = WebpackBundle(
+    __name__,
+    'assets',
+    entry={
+        'communities_app': './js/invenio_communities/app.js',
+        'communities_ckeditor': './js/invenio_communities/ckeditor.js',
+        'communities_theme': './scss/invenio_communities/theme.scss',
+    },
+    dependencies={
         'ckeditor': '~4.5.8',
     }
 )
